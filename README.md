@@ -63,7 +63,7 @@ To configure the Welcome Bot, edit your `config.json` file with a message you wa
 
 where
 
-- **TeamName**: The teams for which the Welcome Bot sends a message. Must be the team handle used in the URL, in lowercase. For example, in the following URL, the **TeamName** value is `my-team`: https://example.com/my-team/channels/my-channel . In the case of multiple teams, use comma separated fields. For example `"my-team, my-team-2"` to display the same messages for both `my-team` and `my-team-2`
+- **TeamName**: The team for which the Welcome Bot sends a message for. Can be set to "*" if the message is meant for each team which user joined. Must be the team handle used in the URL, in lowercase. For example, in the following URL the **TeamName** value is `my-team`: https://example.com/my-team/channels/my-channel
 - **DelayInSeconds**: The number of seconds after joining a team that the user receives a welcome message.
 - **Message**: The message posted to the user.
 - (Optional) **AttachmentMessage**: Message text in attachment containing user action buttons.
@@ -92,6 +92,8 @@ Those who join the Staff team should be added to a set of channels based on thei
   - Support added to Bugs, Customer Support and Leads channels
 
 Moreover, those who join the DevSecOps team should automatically be added to Escalation Process and Incidents channels.
+
+And user will received a welcome message for joining each team
 
 To accomplish the above, you can specify the following configuration in your `config.json` file.
 
@@ -174,6 +176,15 @@ To accomplish the above, you can specify the following configuration in your `co
                                 "ChannelsAddedTo": ["escalation-process", "incidents"]
                             }
                         ]
+                    },
+                    {
+                        "DelayInSeconds": 5,
+                        "Message": [
+                            "### Welcome {{.UserDisplayName}} to the {{.Team.DisplayName}} team!",
+                            "",
+                            "Feel free to discuss off-topic things, but please use the ~off-topic channel for this"
+                        ],
+                        "TeamName": "*"
                     }
                 ]
             }
